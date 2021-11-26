@@ -12,9 +12,11 @@ export async function getStaticProps() {
 
   return {
     props: {
-      photos: res.gfycats
-        .filter((i) => i.nsfw === "0")
-        .map(({ gfyName, width, height }) => ({ id: gfyName, width, height })),
+      photos: res.gfycats.map(({ gfyName, width, height }) => ({
+        id: gfyName,
+        width,
+        height,
+      })),
     },
     revalidate: true,
   };
@@ -39,6 +41,8 @@ export default function Home({ photos }) {
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
+
+  console.log("photos > ", photos);
 
   return (
     <main className={styles.container}>
